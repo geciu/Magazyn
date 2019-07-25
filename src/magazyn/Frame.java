@@ -91,6 +91,7 @@ public class Frame extends JFrame implements ActionListener {
 
         menuPomoc = new JMenu("Pomoc");
         mOProgramie = new JMenuItem("O programie");
+        mOProgramie.addActionListener(this);
         menuPomoc.add(mOProgramie);
 
         setJMenuBar(menuBar);
@@ -108,9 +109,12 @@ public class Frame extends JFrame implements ActionListener {
             zapis.close();
             System.out.println(sNazwa);
         }
-        else if(source == bWyjscie || source == mWyjscie){
+        if(source == bWyjscie || source ==  mWyjscie){
             dispose();
             System.out.println("Zamkniecie okna");
+        }
+        if(source == mOProgramie){
+            JOptionPane.showMessageDialog(this, "To okno wyświetla pomoc dla klientów");
         }
     }
 }
