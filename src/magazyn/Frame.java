@@ -14,7 +14,7 @@ public class Frame extends JFrame implements ActionListener {
 
     private JPanel panel;
     JLabel tekst;
-    JTextArea nazwa, ilosc, polozenie;
+    JTextArea notatnik, ilosc, polozenie;
     JButton bZapis, bWyjscie;
     PrintWriter zapis;
     String sNazwa, sIlosc, sPolozenie;
@@ -31,7 +31,7 @@ public class Frame extends JFrame implements ActionListener {
     public Frame() throws FileNotFoundException {
         super("Magazyn");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(width,height,800,270);
+        setBounds(width,height,800,800);
 
         panel = new JPanel();
         panel.setLayout(null);
@@ -43,7 +43,7 @@ public class Frame extends JFrame implements ActionListener {
         tekst.setForeground(Color.GRAY.darker());
         panel.add(tekst);
 
-        nazwa = new JTextArea();
+        /*nazwa = new JTextArea();
         nazwa.setBounds(10,45,150,20);
         panel.add(nazwa);
 
@@ -54,14 +54,19 @@ public class Frame extends JFrame implements ActionListener {
         polozenie = new JTextArea();
         polozenie.setBounds(10,105,150,20);
         panel.add(polozenie);
+*/
+        notatnik = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(notatnik);
+        scrollPane.setBounds(10,45,500,500);
+        panel.add(scrollPane);
 
         bZapis = new JButton("Zapisz przedmiot");
-        bZapis.setBounds(10,135,150,25);
+        bZapis.setBounds(10,615,150,25);
         panel.add(bZapis);
         bZapis.addActionListener(this);
 
         bWyjscie = new JButton("Wyjscie");
-        bWyjscie.setBounds(10,170,150,25);
+        bWyjscie.setBounds(180,615,150,25);
         panel.add(bWyjscie);
         bWyjscie.addActionListener(this);
 
@@ -109,31 +114,64 @@ public class Frame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         Object source = e.getSource();
-        if(source == mOtworz){
+        if(source == mOtworz)
+        {
             JFileChooser fc = new JFileChooser();
-            if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+            if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+            {
                 File plik = fc.getSelectedFile();
-                JOptionPane.showMessageDialog(null, "Wybrany plik to " + plik.getAbsolutePath());
+                //JOptionPane.showMessageDialog(null, "Wybrany plik to " + plik.getAbsolutePath());
+                try
+                {
+                    Scanner klawiatura = new Scanner(plik);
+                    while (klawiatura.hasNext())
+                        notatnik.append(klawiatura.nextLine() + "\n");
+                }
+                catch (FileNotFoundException e1)
+                {
+                    e1.printStackTrace();
+                }
             }
         }
-        if(source == bZapis || source == mZapisz) {
+        if(source == bZapis || source == mZapisz)
+        {
+            JFileChooser fc = new JFileChooser();
+            if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+            {
+                File plik = fc.getSelectedFile();
+                try
+                {
+                    PrintWriter pw = new PrintWriter(plik);
+                }
+                catch (FileNotFoundException e1)
+                {
+                    e1.printStackTrace();
+                }
+
+                //JOptionPane.showMessageDialog(null, "Wybrany plik to " + plik);
+            }
             zapis.close();
             System.out.println(sNazwa);
         }
-        if(source == bWyjscie || source ==  mWyjscie){
+        if(source == bWyjscie || source ==  mWyjscie)
+        {
             int odp = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wyjść?", "Ostrzeżenie o wyjściu", JOptionPane.YES_NO_OPTION);
-            if(odp == JOptionPane.YES_OPTION) {
+            if(odp == JOptionPane.YES_OPTION)
+            {
                 dispose();
                 System.out.println("Zamkniecie okna");
             }
-            else if(odp == JOptionPane.NO_OPTION){
+            else if(odp == JOptionPane.NO_OPTION)
+            {
                 JOptionPane.showMessageDialog(this, "Program nie zostanie zamknięty", "Pracuj dalej", JOptionPane.INFORMATION_MESSAGE);
             }
-            else if(odp == JOptionPane.CLOSED_OPTION){
+            else if(odp == JOptionPane.CLOSED_OPTION)
+            {
                 JOptionPane.showMessageDialog(this, "Zamknięcie nie powiodło się", "Spróbuj jeszcze raz", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if(source == mOProgramie){
+        if(source == mOProgramie)
+        {
             JOptionPane.showMessageDialog(this, "To okno wyświetla pomoc dla klientów", "UWAGA!", JOptionPane.ERROR_MESSAGE);
         }
     }
