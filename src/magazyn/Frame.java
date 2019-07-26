@@ -26,7 +26,7 @@ public class Frame extends JFrame implements ActionListener {
     int height = getHeight()/2;
     int index = 1;
 
-    File plik;
+    //File plik;
 
     public Frame() throws FileNotFoundException {
         super("Magazyn");
@@ -69,6 +69,7 @@ public class Frame extends JFrame implements ActionListener {
 
         menuPlik = new JMenu("Plik");
         mOtworz = new JMenuItem("Otwórz");
+        mOtworz.addActionListener(this);
         menuPlik.add(mOtworz);
         mZapisz = new JMenuItem("Zapisz");
         mZapisz.addActionListener(this);
@@ -108,20 +109,27 @@ public class Frame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         Object source = e.getSource();
+        if(source == mOtworz){
+            JFileChooser fc = new JFileChooser();
+            if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                File plik = fc.getSelectedFile();
+                JOptionPane.showMessageDialog(null, "Wybrany plik to " + plik.getAbsolutePath());
+            }
+        }
         if(source == bZapis || source == mZapisz) {
             zapis.close();
             System.out.println(sNazwa);
         }
         if(source == bWyjscie || source ==  mWyjscie){
             int odp = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wyjść?", "Ostrzeżenie o wyjściu", JOptionPane.YES_NO_OPTION);
-            if (odp == JOptionPane.YES_OPTION) {
+            if(odp == JOptionPane.YES_OPTION) {
                 dispose();
                 System.out.println("Zamkniecie okna");
             }
-            else if (odp == JOptionPane.NO_OPTION){
+            else if(odp == JOptionPane.NO_OPTION){
                 JOptionPane.showMessageDialog(this, "Program nie zostanie zamknięty", "Pracuj dalej", JOptionPane.INFORMATION_MESSAGE);
             }
-            else if (odp == JOptionPane.CLOSED_OPTION){
+            else if(odp == JOptionPane.CLOSED_OPTION){
                 JOptionPane.showMessageDialog(this, "Zamknięcie nie powiodło się", "Spróbuj jeszcze raz", JOptionPane.ERROR_MESSAGE);
             }
         }
