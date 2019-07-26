@@ -75,6 +75,8 @@ public class Frame extends JFrame implements ActionListener {
         menuPlik.add(mZapisz);
         mWyjscie = new JMenuItem("Wyjście");
         mWyjscie.addActionListener(this);
+        menuPlik.addSeparator();
+        mWyjscie.setAccelerator(KeyStroke.getKeyStroke("ctrl X"));
         menuPlik.add(mWyjscie);
 
         menuNarzedzia = new JMenu("Narzedzia");
@@ -82,10 +84,11 @@ public class Frame extends JFrame implements ActionListener {
         menuNarzedzia.add(mNarz1);
         mNarz2 = new JMenuItem("Narzedzia 2");
         menuNarzedzia.add(mNarz2);
+        menuNarzedzia.addSeparator();
             menuOpcje = new JMenu("Opcje");
+        mOpcja2 = new JMenuItem("Opcja 2");
             mOpcja1 = new JMenuItem("Opcja 1");
             menuOpcje.add(mOpcja1);
-            mOpcja2 = new JMenuItem("Opcja 2");
             menuOpcje.add(mOpcja2);
         menuNarzedzia.add(menuOpcje);
 
@@ -114,7 +117,7 @@ public class Frame extends JFrame implements ActionListener {
             System.out.println("Zamkniecie okna");
         }
         if(source == mOProgramie){
-            JOptionPane.showMessageDialog(this, "To okno wyświetla pomoc dla klientów");
+            JOptionPane.showMessageDialog(this, "To okno wyświetla pomoc dla klientów", "UWAGA!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
