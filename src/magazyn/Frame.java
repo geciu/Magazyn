@@ -142,6 +142,11 @@ public class Frame extends JFrame implements ActionListener {
                 try
                 {
                     PrintWriter pw = new PrintWriter(plik);
+                    Scanner klawiatura = new Scanner(notatnik.getText());
+                    while(klawiatura.hasNext()){
+                       pw.println(klawiatura.nextLine() + "\n");
+                        pw.close();
+                    }
                 }
                 catch (FileNotFoundException e1)
                 {
@@ -150,7 +155,7 @@ public class Frame extends JFrame implements ActionListener {
 
                 //JOptionPane.showMessageDialog(null, "Wybrany plik to " + plik);
             }
-            zapis.close();
+
             System.out.println(sNazwa);
         }
         if(source == bWyjscie || source ==  mWyjscie)
