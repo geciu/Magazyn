@@ -113,8 +113,17 @@ public class Frame extends JFrame implements ActionListener {
             System.out.println(sNazwa);
         }
         if(source == bWyjscie || source ==  mWyjscie){
-            dispose();
-            System.out.println("Zamkniecie okna");
+            int odp = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wyjść?", "Ostrzeżenie o wyjściu", JOptionPane.YES_NO_OPTION);
+            if (odp == JOptionPane.YES_OPTION) {
+                dispose();
+                System.out.println("Zamkniecie okna");
+            }
+            else if (odp == JOptionPane.NO_OPTION){
+                JOptionPane.showMessageDialog(this, "Program nie zostanie zamknięty", "Pracuj dalej", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if (odp == JOptionPane.CLOSED_OPTION){
+                JOptionPane.showMessageDialog(this, "Zamknięcie nie powiodło się", "Spróbuj jeszcze raz", JOptionPane.ERROR_MESSAGE);
+            }
         }
         if(source == mOProgramie){
             JOptionPane.showMessageDialog(this, "To okno wyświetla pomoc dla klientów", "UWAGA!", JOptionPane.ERROR_MESSAGE);
